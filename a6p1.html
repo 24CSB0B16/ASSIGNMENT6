@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ROOM BOOKING</title>
+<style>
+h1 
+{ 
+text-shadow: 2px 2px violet;
+ }
+body 
+{ 
+background-image: url('rbfbg.jpeg'); 
+background-size: cover; 
+}
+table, th, td {
+ border: 1px solid black;
+ padding: 5px; 
+}
+td { 
+padding-left: 10px;
+ padding-right: 10px; 
+}
+input[type="text"], input[type="date"], input[type="radio"] { margin-left: 5px; }
+input[type="submit"], input[type="reset"] { 
+font-size: 16px; 
+padding: 10px 15px; 
+margin: 5px; 
+border: none;
+ cursor: pointer;
+ border-radius: 5px;
+ }
+input[type="submit"] {
+ background-color: #28a745;
+ color: white; 
+}
+input[type="submit"]:
+hover { 
+background-color: #218838; 
+}
+input[type="reset"] {
+ background-color: #dc3545;
+ color: white;
+ }
+input[type="reset"]:
+hover {
+ background-color: #c82333;
+ }
+</style>
+<script>
+function validateform() {
+	let form=document.forms["bookingForm"];
+	let firstname=form["first_name"].value;
+	let lastname=form["last_name"].value;
+	let email=form["email"].value;
+	let phone=form["telephone"].value;
+	let arrivaldate=form["arrival_date"].value;
+	let departuredate=form["departure_date"].value;
+	let cardnumber=form["credit_card_number"].value;
+	let cvv = form["cvv_code"].value;
+	if (firstname===""||lastname===""||email===""||phone===""||arrivaldate===""||departuredate===""||cardnumber===""||cvv==="")
+ {
+		alert("All fields must be filled out.");
+		return false;
+	}
+	let atsymbol = false;
+	let dotsymbol = false;
+	for (let i=0;i<email.length;i++)
+ {
+		if(email[i]==="@") 
+{
+			atsymbol=true;
+		}
+		if(email[i]===".")
+ {
+			dotsymbol=true;
+		}
+	}
+	if (!atsymbol||!dotsymbol)
+ {
+		alert("Invalid email format.");
+		return false;
+	}
+	let phonevalid=true;
+	if(phone.length!==10) 
+{
+		phonevalid=false;
+	}
+	for(let i=0;i<phone.length;i++)
+ {
+		if(phone[i]<"0"||phone[i]>"9")
+ {
+			phonevalid=false;
+		}
+	}
+	if(!phonevalid)
+ {
+		alert("Phone number must be 10 digits.");
+		return false;
+	}
+	if(new Date(arrivaldate)>=new Date(departuredate)) {
+		alert("Departure date must be after arrival date.");
+		return false;
+	}
+	let cardvalid = true;
+	if (cardnumber.length !== 16) {
+		cardvalid=false;
+	}
+	for(let i=0;i<cardnumber.length;i++)
+ {
+		if (cardnumber[i]<"0"||cardnumber[i]>"9")
+ {
+			cardvalid=false;
+		}
+	}
+	if(!cardvalid)
+ {
+		alert("Credit card number must be 16 digits.");
+		return false;
+	}
+	let cvvvalid=true;
+	if (cvv.length!==3) 
+{
+		cvvvalid=false;
+	}
+	for(let i=0;i<cvv.length;i++) 
+{
+		if(cvv[i]<"0"||cvv[i]>"9")
+ {
+			cvvvalid=false;
+		}
+	}
+	if(!cvvvalid) 
+{
+		alert("CVV must be 3 digits.");
+		return false;
+	}
+	let roomtypes=document.getElementsByName("room_type");
+	let roomselected=false;
+	for(let i=0;i<roomtypes.length;i++)
+ {
+		if (roomtypes[i].checked) {
+			roomselected=true;
+		}
+	}
+	if (!roomselected) {
+		alert("Please select a room type.");
+		return false;
+	}
+	let paymentmethods=document.getElementsByName("payment_method");
+	let paymentselected=false;
+	for (let i=0;i<paymentmethods.length;i++)
+ {
+		if (paymentmethods[i].checked)
+ {
+			paymentselected=true;
+		}
+	}
+	if (!paymentselected) {
+		alert("Please select a payment method.");
+		return false;
+	}
+	return true;
+}
+</script>
+</head>
+<body>
+<center>
+<h1> ROOM BOOKING FORM </h1>
+<form name="bookingForm" onsubmit="return validateform()">
+                                  <table style="width: 60%">
+                                          <tr><td> FIRST NAME:
+                                          </td><td> <input type="text" name="first_name"> </td></tr>
+                                                  <tr><td> LAST NAME:
+                                                  </td><td> <input type="text" name="last_name"> </td></tr>
+                                                          <tr><td> ADDRESS:
+                                                          </td><td> <input type="text" name="address"> </td></tr>
+                                                                  <tr><td> EMAIL:
+                                                                  </td><td> <input type="text" name="email"> </td></tr>
+                                                                          <tr><td> TELEPHONE NUMBER:
+                                                                          </td><td> <input type="text" name="telephone"> </td></tr>
+                                                                                  <tr><td> ROOM TYPE:
+                                                                                  </td><td>
+                                                                                  <input type="radio" name="room_type" value="Single Room"> Single Room<br>
+                                                                                          <input type="radio" name="room_type" value="Double Room"> Double Room<br>
+                                                                                                  <input type="radio" name="room_type" value="Suite"> Suite<br>
+                                                                                                          </td></tr>
+                                                                                                          <tr><td> ARRIVAL DATE:
+                                                                                                          </td><td> <input type="date" name="arrival_date"> </td></tr>
+                                                                                                                  <tr><td> DEPARTURE DATE:
+                                                                                                                  </td><td> <input type="date" name="departure_date"> </td></tr>
+                                                                                                                          <tr><td> CHILDREN:
+                                                                                                                          </td><td> <input type="text" name="children"> </td></tr>
+                                                                                                                                  <tr><td> PAYMENT METHOD:
+                                                                                                                                  </td><td>
+                                                                                                                                  <input type="radio" name="payment_method" value="Credit Card"> CREDIT CARD<br>
+                                                                                                                                          <input type="radio" name="payment_method" value="Bank Transfer"> BANK TRANSFER<br>
+                                                                                                                                                  <input type="radio" name="payment_method" value="Cash"> CASH<br>
+                                                                                                                                                          </td></tr>
+                                                                                                                                                          <tr><td> CREDIT CARD NUMBER:
+                                                                                                                                                          </td><td> <input type="text" name="credit_card_number"> </td></tr>
+                                                                                                                                                                  <tr><td> CVV CODE:
+                                                                                                                                                                  </td><td> <input type="text" name="cvv_code"> </td></tr>
+                                                                                                                                                                          </table>
+                                                                                                                                                                          <div>
+                                                                                                                                                                          <input type="submit" value="Submit">
+                                                                                                                                                                                  <input type="reset" value="Reset">
+                                                                                                                                                                                          </div>
+                                                                                                                                                                                          </form>
+                                                                                                                                                                                          </center>
+                                                                                                                                                                                          </body>
+                                                                                                                                                                                          </html>
